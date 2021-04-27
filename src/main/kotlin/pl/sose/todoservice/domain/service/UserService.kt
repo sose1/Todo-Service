@@ -24,4 +24,11 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.findByIdOrNull(id)
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "User with this ID = $id not found")
     }
+
+    fun deleteUser(id: String) {
+        val user = userRepository.findByIdOrNull(id)
+            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "User with this ID = $id not found")
+
+        userRepository.delete(user)
+    }
 }

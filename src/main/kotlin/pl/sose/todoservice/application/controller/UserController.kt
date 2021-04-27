@@ -35,4 +35,10 @@ class UserController(private val userService: UserService){
             email = user.email
         )
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/user/{id}")
+    fun deleteUser(@PathVariable id: String) {
+        userService.deleteUser(id)
+    }
 }
