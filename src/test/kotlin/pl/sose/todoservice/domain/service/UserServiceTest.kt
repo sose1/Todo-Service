@@ -7,6 +7,9 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.springframework.data.repository.findByIdOrNull
+import org.springframework.http.HttpStatus
+import org.springframework.web.server.ResponseStatusException
 import pl.sose.todoservice.domain.entity.User
 import pl.sose.todoservice.domain.model.UserCreateDTO
 import pl.sose.todoservice.infrastructure.repository.UserRepository
@@ -43,6 +46,38 @@ internal class UserServiceTest {
                     email = userCreateDTO.email,
                     password = userCreateDTO.password,
                 ), result)
+        }
+    }
+    @Nested
+    inner class GetById {
+        @Test
+        fun `should return user when id is correct`() {
+            //given
+            val id = UUID.randomUUID().toString()
+            val userCreateDTO = userCreateDTO()
+            val user = User(id, userCreateDTO.name, userCreateDTO.email, userCreateDTO.password)
+
+            every { userRepository.findByIdOrNull(id) } returns user
+
+            //when
+            val result = userService.getUserById(id)
+
+            //then
+            verify(exactly = 1) { userRepository.findByIdOrNull(id) }
+            assertEquals(user, result)
+        }
+
+        @Test
+        fun `should throw when id is incorrect`() {
+            //given
+            every { userRepository.findByIdOrNull("Bad id") } throws ResponseStatusException(HttpStatus.NOT_FOUND)
+
+            //when
+            //then
+            assertThrows(ResponseStatusException::class.java) {
+                userService.getUserById("Bad id")
+            }
+
         }
     }
 }

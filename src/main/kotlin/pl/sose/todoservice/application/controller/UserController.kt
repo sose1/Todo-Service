@@ -24,4 +24,15 @@ class UserController(private val userService: UserService){
             email = user.email
         )
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/user/{id}")
+    fun getUserById(@PathVariable id: String): UserResponse {
+        val user = userService.getUserById(id)
+        return UserResponse(
+            id = user.id,
+            name = user.name,
+            email = user.email
+        )
+    }
 }

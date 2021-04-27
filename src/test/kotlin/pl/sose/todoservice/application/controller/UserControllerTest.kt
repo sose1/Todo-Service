@@ -31,7 +31,7 @@ internal class UserControllerTest {
                 User(id, createUserRequest.name, createUserRequest.email, createUserRequest.password)
 
             //when
-            val response = userController.createUser(createUserRequest)
+            val result = userController.createUser(createUserRequest)
 
             //then
             verify(exactly = 1) { userService.createUser(slot.captured) }
@@ -40,7 +40,31 @@ internal class UserControllerTest {
                     id = id,
                     name = createUserRequest.name,
                     email = createUserRequest.email),
-                response)
+                result)
+        }
+    }
+
+    @Nested
+    inner class GetById {
+        @Test
+        fun `should return user response when id is correct`() {
+            //given
+            val id = UUID.randomUUID().toString()
+            val createUserRequest= createUserRequest()
+            val user = User(id, createUserRequest.name, createUserRequest.email, createUserRequest.password)
+
+            every { userService.getUserById(id) } returns user
+
+            //when
+            val result = userController.getUserById(id)
+
+            //then
+            verify(exactly = 1) { userService.getUserById(id) }
+            assertEquals(UserResponse(
+                id = id,
+                name = createUserRequest.name,
+                email = createUserRequest.email
+            ), result)
         }
     }
 }
