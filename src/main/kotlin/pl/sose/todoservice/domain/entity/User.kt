@@ -12,11 +12,11 @@ data class User(
     val id: String = UUID.randomUUID().toString(),
 
     @Column(nullable = false)
-    val name: String,
+    var name: String,
 
     @Column(nullable = false)
-    val email: String,
+    var email: String,
 
     @Column(nullable = false)
-    val password: String
+    var password: String
 )
