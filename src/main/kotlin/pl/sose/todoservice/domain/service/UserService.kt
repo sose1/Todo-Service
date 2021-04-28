@@ -11,6 +11,11 @@ import pl.sose.todoservice.infrastructure.repository.UserRepository
 @Service
 class UserService(private val userRepository: UserRepository) {
     fun createUser(userCreateDTO: UserCreateDTO): User {
+        if (emailExist(userCreateDTO.email)) {
+            throw ResponseStatusException(HttpStatus.CONFLICT,
+                "Email is already taken")
+        }
+
         return userRepository.save(
             User(
                 name = userCreateDTO.name,
@@ -42,4 +47,6 @@ class UserService(private val userRepository: UserRepository) {
         }
         return userRepository.save(user)
     }
+
+    private fun emailExist(email: String) = userRepository.findByEmail(email) != null
 }
