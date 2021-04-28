@@ -15,7 +15,7 @@ class UserController(private val userService: UserService){
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/user")
-    fun createUser(@RequestBody @Valid request: CreateUserRequest): UserResponse {
+    fun createUser(@Valid  @RequestBody request: CreateUserRequest): UserResponse {
         val userDTO = UserCreateDTO(request.name, request.email, request.password)
         val user = userService.createUser(userDTO)
 
