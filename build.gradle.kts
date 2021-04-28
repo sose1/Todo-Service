@@ -26,6 +26,10 @@ dependencies {
     implementation ("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
+    //swagger
+    implementation ("io.springfox",  "springfox-swagger-ui", "2.9.2")
+    implementation ("io.springfox",  "springfox-swagger2", "2.9.2")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.mockk:mockk:1.11.0")
     testImplementation("com.ninja-squad:springmockk:3.0.1")
