@@ -18,5 +18,8 @@ data class User(
     var email: String,
 
     @Column(nullable = false)
-    var password: String
+    var password: String,
+
+    @Column
+    var verified:Boolean = false,
 )
