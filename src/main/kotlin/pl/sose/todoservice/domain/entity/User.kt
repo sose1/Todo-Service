@@ -14,7 +14,7 @@ data class User(
     @Column(nullable = false)
     var name: String,
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     var email: String,
 
     @Column(nullable = false)
