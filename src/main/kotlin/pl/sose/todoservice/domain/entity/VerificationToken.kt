@@ -3,7 +3,6 @@ package pl.sose.todoservice.domain.entity
 import java.util.*
 import javax.persistence.*
 
-
 @Entity
 data class VerificationToken(
     @Id
