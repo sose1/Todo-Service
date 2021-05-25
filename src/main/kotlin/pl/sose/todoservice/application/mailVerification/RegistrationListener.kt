@@ -20,18 +20,17 @@ class RegistrationListener(private val userService: UserService,
 
     private fun confirmRegistration(event: OnRegistrationCompleteEvent) {
         val user: User = event.user
-        val token = UUID.randomUUID().toString()
+        val token = (100000 + Random().nextInt(900000)).toString()
 
         userService.createVerificationToken(user, token)
 
         val recipientAddress: String = user.email
         val subject = "Verify your account"
-        val confirmationUrl = "${event.appUrl}/registrationConfirm?token=$token"
         val email = SimpleMailMessage()
 
         email.setTo(recipientAddress)
         email.setSubject(subject)
-        email.setText("http://localhost:8080$confirmationUrl", )
+        email.setText("Your verification token: $token" )
 
         mailSender.send(email)
     }

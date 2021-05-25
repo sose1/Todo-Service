@@ -53,9 +53,9 @@ class UserService(private val userRepository: UserRepository,
         return userRepository.save(user)
     }
 
-    fun saveRegisteredUser(user: User) {
+    fun saveRegisteredUser(user: User): User {
         user.verified = true
-        userRepository.save(user)
+        return userRepository.save(user)
     }
 
     fun createVerificationToken(user: User, token: String) {
